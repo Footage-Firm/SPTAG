@@ -1,4 +1,7 @@
-FROM ubuntu:18.04
+FROM phusion/baseimage:master-amd64
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
 
 WORKDIR /app
 COPY CMakeLists.txt ./
@@ -29,3 +32,5 @@ RUN mkdir build && cd build && cmake .. && make && cd ..
 
 # so python can find the SPTAG module
 ENV PYTHONPATH=/app/Release
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
